@@ -1,8 +1,7 @@
 package main
 
 import (
-	"log"
-	"net"
+	"fmt"
 
         // Import the generated protobuf code
 	pb "github.com/Kavit900/message-scheduler/consignment-service/proto/consignment"
