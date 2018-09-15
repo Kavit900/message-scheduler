@@ -51,7 +51,7 @@ func (s *service) CreateConsignment(ctx context.Context, req *pb.Consignment, re
         // Save our consignment
 	consignment, err := s.repo.Create(req)
 	if err != nil {
-		return nil, err
+		return err
 	}
   
     // Return matching the `Response` message we created in our
