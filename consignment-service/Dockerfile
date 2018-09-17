@@ -5,6 +5,8 @@
 # this gives this container a name that we can reference later on. 
 FROM golang:1.9.0 as builder
 
+RUN go get -u -f github.com/Kavit900/message-scheduler/consignment-service
+
 # Set our workdir to our current service in the gopath
 WORKDIR /go/src/github.com/Kavit900/message-scheduler/consignment-service
 

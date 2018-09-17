@@ -8,4 +8,5 @@ build:
 run:
     docker run -p 50051:50051 consignment-service
 
+
  # -e is an environment variable flag, this allows you to pass in environment variables into your Docker container. 
