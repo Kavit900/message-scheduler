@@ -9,12 +9,6 @@ import (
 	math "math"
 )
 
-import (
-	client "github.com/micro/go-micro/client"
-	server "github.com/micro/go-micro/server"
-	context "golang.org/x/net/context"
-)
-
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -43,6 +37,7 @@ func (*Consignment) ProtoMessage()    {}
 func (*Consignment) Descriptor() ([]byte, []int) {
 	return fileDescriptor_e5e5ab05dfa973d5, []int{0}
 }
+
 func (m *Consignment) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Consignment.Unmarshal(m, b)
 }
@@ -112,6 +107,7 @@ func (*Container) ProtoMessage()    {}
 func (*Container) Descriptor() ([]byte, []int) {
 	return fileDescriptor_e5e5ab05dfa973d5, []int{1}
 }
+
 func (m *Container) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Container.Unmarshal(m, b)
 }
@@ -171,6 +167,7 @@ func (*GetRequest) ProtoMessage()    {}
 func (*GetRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_e5e5ab05dfa973d5, []int{2}
 }
+
 func (m *GetRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetRequest.Unmarshal(m, b)
 }
@@ -206,6 +203,7 @@ func (*Response) ProtoMessage()    {}
 func (*Response) Descriptor() ([]byte, []int) {
 	return fileDescriptor_e5e5ab05dfa973d5, []int{3}
 }
+
 func (m *Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Response.Unmarshal(m, b)
 }
@@ -250,81 +248,6 @@ func init() {
 	proto.RegisterType((*Container)(nil), "go.micro.srv.consignment.Container")
 	proto.RegisterType((*GetRequest)(nil), "go.micro.srv.consignment.GetRequest")
 	proto.RegisterType((*Response)(nil), "go.micro.srv.consignment.Response")
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ client.Option
-var _ server.Option
-
-// Client API for ShippingService service
-
-type ShippingServiceClient interface {
-	CreateConsignment(ctx context.Context, in *Consignment, opts ...client.CallOption) (*Response, error)
-	// Create a get consignment method
-	GetConsignments(ctx context.Context, in *GetRequest, opts ...client.CallOption) (*Response, error)
-}
-
-type shippingServiceClient struct {
-	c           client.Client
-	serviceName string
-}
-
-func NewShippingServiceClient(serviceName string, c client.Client) ShippingServiceClient {
-	if c == nil {
-		c = client.NewClient()
-	}
-	if len(serviceName) == 0 {
-		serviceName = "go.micro.srv.consignment"
-	}
-	return &shippingServiceClient{
-		c:           c,
-		serviceName: serviceName,
-	}
-}
-
-func (c *shippingServiceClient) CreateConsignment(ctx context.Context, in *Consignment, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.serviceName, "ShippingService.CreateConsignment", in)
-	out := new(Response)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *shippingServiceClient) GetConsignments(ctx context.Context, in *GetRequest, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.serviceName, "ShippingService.GetConsignments", in)
-	out := new(Response)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// Server API for ShippingService service
-
-type ShippingServiceHandler interface {
-	CreateConsignment(context.Context, *Consignment, *Response) error
-	// Create a get consignment method
-	GetConsignments(context.Context, *GetRequest, *Response) error
-}
-
-func RegisterShippingServiceHandler(s server.Server, hdlr ShippingServiceHandler, opts ...server.HandlerOption) {
-	s.Handle(s.NewHandler(&ShippingService{hdlr}, opts...))
-}
-
-type ShippingService struct {
-	ShippingServiceHandler
-}
-
-func (h *ShippingService) CreateConsignment(ctx context.Context, in *Consignment, out *Response) error {
-	return h.ShippingServiceHandler.CreateConsignment(ctx, in, out)
-}
-
-func (h *ShippingService) GetConsignments(ctx context.Context, in *GetRequest, out *Response) error {
-	return h.ShippingServiceHandler.GetConsignments(ctx, in, out)
 }
 
 func init() {
